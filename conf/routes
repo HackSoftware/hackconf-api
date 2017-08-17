@@ -1,0 +1,27 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# https://www.playframework.com/documentation/latest/ScalaRouting
+# ~~~~
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+
+GET     /speakers                   controllers.SpeakerController.list
+POST    /speakers                   controllers.SpeakerController.create
+GET     /speakers/:id               controllers.SpeakerController.get(id: Long)
+PUT     /speakers/:id               controllers.SpeakerController.update(id: Long)
+DELETE  /speakers/:id               controllers.SpeakerController.delete(id: Long)
+
+GET     /talks/schedules            controllers.TalkScheduleController.list
+POST    /talks/schedules            controllers.TalkScheduleController.create
+GET     /talks/schedules/:id        controllers.TalkScheduleController.get(id: Long)
+PUT     /talks/schedules/:id        controllers.TalkScheduleController.update(id: Long)
+DELETE  /talks/schedules/:id        controllers.TalkScheduleController.delete(id: Long)
+
+GET     /talks                      controllers.TalkController.list
+POST    /talks                      controllers.TalkController.create
+GET     /talks/:id                  controllers.TalkController.get(id: Long)
+PUT     /talks/:id                  controllers.TalkController.update(id: Long)
+DELETE  /talks/:id                  controllers.TalkController.delete(id: Long)
+
+GET     /schedule/:year/:month/:day controllers.ScheduleController.index(year: Int, month: Int, day: Int)
