@@ -24,4 +24,4 @@ GET     /talks/:id                  controllers.TalkController.get(id: Long)
 PUT     /talks/:id                  controllers.TalkController.update(id: Long)
 DELETE  /talks/:id                  controllers.TalkController.delete(id: Long)
 
-GET     /schedule/:year/:month/:day controllers.ScheduleController.index(year: Int, month: Int, day: Int)
+POST     /schedule controllers.ScheduleController.get
