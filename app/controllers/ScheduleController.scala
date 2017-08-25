@@ -30,11 +30,13 @@ class ScheduleController @Inject() (
       }
       // Don't ask...
     ).map(_.toMap).map {
-      x => Ok(JsArray(
-        x.map { case (d, s) =>
-          JsObject(Map(d.toString("yyyy-MM-dd") -> toJson(s)))
-        }.toSeq
-      ))
+      x => Ok(
+        JsObject(
+          Map(
+            "result" -> JsObject(x.map { case (d, s) => d.toString("yyyy-MM-dd") -> toJson(s)})
+          )
+        )
+      )
     }
   }
 

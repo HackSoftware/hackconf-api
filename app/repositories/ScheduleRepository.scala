@@ -18,6 +18,7 @@ class ScheduleRepository @Inject() (
 
   def get(year: Int, month: Int, day: Int): Future[Seq[((TalkSchedule, Talk), Speaker)]] = db.run {
     talkScheduleQ.filter(_.startDate === new LocalDate(year, month, day))
+      .sortBy(_.startTime)
       .join(talkQ).on(_.talkId === _.id)
       .join(speakerQ).on(_._2.speakerId === _.id)
       .result
