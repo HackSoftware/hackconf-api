@@ -19,18 +19,18 @@ trait SpeakerQ extends BaseQ {
 
     def bio = column[String]("bio")
 
-    def url = column[String]("url")
+    def youtubeId = column[String]("youtube_id")
 
-    def * = (firstName, lastName, bio, url, id.?).mapTo[Speaker]
+    def * = (firstName, lastName, bio, youtubeId, id.?).mapTo[Speaker]
   }
 
   val speakerQ = TableQuery[SpeakerTable]
 }
 
 @Singleton
-class SpeakerRepository @Inject() (
+class SpeakerRepo @Inject() (
   protected val dbConfigProvider: DatabaseConfigProvider
-) extends BaseRepository[Speaker] with SpeakerQ {
+) extends CrudRepo[Speaker] with SpeakerQ {
 
   import profile.api._
 

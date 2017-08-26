@@ -6,7 +6,6 @@ create table talks(
   id serial primary key,
   title varchar(255) not null,
   description text not null,
-  image_url varchar(255) not null,
   speaker_id integer references speakers(id)
 );
 

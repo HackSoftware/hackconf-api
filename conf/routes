@@ -18,6 +18,12 @@ GET     /talks/schedules/:id        controllers.TalkScheduleController.get(id: L
 PUT     /talks/schedules/:id        controllers.TalkScheduleController.update(id: Long)
 DELETE  /talks/schedules/:id        controllers.TalkScheduleController.delete(id: Long)
 
+GET     /talks/feedback            controllers.TalkFeedbackController.list
+POST    /talks/feedback            controllers.TalkFeedbackController.create
+GET     /talks/feedback/:id        controllers.TalkFeedbackController.get(id: Long)
+PUT     /talks/feedback/:id        controllers.TalkFeedbackController.update(id: Long)
+DELETE  /talks/feedback/:id        controllers.TalkFeedbackController.delete(id: Long)
+
 GET     /talks                      controllers.TalkController.list
 POST    /talks                      controllers.TalkController.create
 GET     /talks/:id                  controllers.TalkController.get(id: Long)

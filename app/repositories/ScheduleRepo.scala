@@ -9,7 +9,7 @@ import play.api.db.slick.DatabaseConfigProvider
 import scala.concurrent.Future
 
 @Singleton
-class ScheduleRepository @Inject() (
+class ScheduleRepo @Inject() (
   protected val dbConfigProvider: DatabaseConfigProvider
 ) extends TalkScheduleQ {
 

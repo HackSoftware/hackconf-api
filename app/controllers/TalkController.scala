@@ -5,14 +5,14 @@ import javax.inject.{Inject, Singleton}
 import models.Talk
 import play.api.libs.json.Json.toJson
 import play.api.mvc.{AbstractController, ControllerComponents}
-import repositories.TalkRepository
+import repositories.TalkRepo
 
 import scala.concurrent.ExecutionContext
 
 @Singleton
 class TalkController @Inject() (
   cc: ControllerComponents,
-  talks: TalkRepository
+  talks: TalkRepo
 )(implicit ec: ExecutionContext) extends AbstractController(cc) {
 
   def list = Action.async {

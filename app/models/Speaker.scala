@@ -6,7 +6,7 @@ case class Speaker(
   firstName: String,
   lastName: String,
   bio: String,
-  url: String,
+  youtubeId: String,
   id: Option[Long] = None
 ) extends DbModel
 

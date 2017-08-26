@@ -35,9 +35,9 @@ trait TalkScheduleQ extends BaseQ with TalkQ {
 }
 
 @Singleton
-class TalkScheduleRepository @Inject()(
+class TalkScheduleRepo @Inject() (
   protected val dbConfigProvider: DatabaseConfigProvider
-) extends BaseRepository[TalkSchedule] with TalkScheduleQ {
+) extends CrudRepo[TalkSchedule] with TalkScheduleQ {
 
   import profile.api._
   import com.github.tototoshi.slick.PostgresJodaSupport._

@@ -7,7 +7,7 @@ create table speakers(
   first_name varchar(255) not null,
   last_name varchar(255) not null,
   bio text not null,
-  url varchar(255) not null
+  youtube_id varchar(255) not null
 );
 
 # --- !Downs

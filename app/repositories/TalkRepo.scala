@@ -17,21 +17,19 @@ trait TalkQ extends BaseQ with SpeakerQ {
 
     def description = column[String]("description")
 
-    def imageUrl = column[String]("image_url")
-
     def speakerId = column[Long]("speaker_id")
     def speaker = foreignKey("speaker_fk", speakerId, speakerQ)(_.id)
 
-    def * = (title, description, imageUrl, speakerId, id.?).mapTo[Talk]
+    def * = (title, description, speakerId, id.?).mapTo[Talk]
   }
 
   val talkQ = TableQuery[TalkTable]
 }
 
 @Singleton
-class TalkRepository @Inject() (
+class TalkRepo @Inject() (
   protected val dbConfigProvider: DatabaseConfigProvider
-) extends BaseRepository[Talk] with TalkQ {
+) extends CrudRepo[Talk] with TalkQ {
 
   import profile.api._
 

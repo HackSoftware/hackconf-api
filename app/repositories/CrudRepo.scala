@@ -5,7 +5,7 @@ import slick.jdbc.JdbcProfile
 
 import scala.concurrent.Future
 
-trait BaseRepository[T] extends HasDatabaseConfigProvider[JdbcProfile] {
+trait CrudRepo[T] extends HasDatabaseConfigProvider[JdbcProfile] {
   def list: Future[Seq[T]]
 
   def create(entity: T): Future[Int]

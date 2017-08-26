@@ -6,16 +6,17 @@ import models.{Schedule, ScheduleRequest}
 import play.api.libs.json.{JsArray, JsObject}
 import play.api.libs.json.Json.toJson
 import play.api.mvc.{AbstractController, ControllerComponents}
-import repositories.ScheduleRepository
+import repositories.ScheduleRepo
 
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class ScheduleController @Inject() (
   cc: ControllerComponents,
-  schedule: ScheduleRepository
+  schedule: ScheduleRepo
 )(implicit ec: ExecutionContext) extends AbstractController(cc) {
 
+  //TODO: clean this mess up
   def get = Action.async(parse.json[ScheduleRequest]) { implicit req =>
     Future.sequence(
       // Don't ask...
