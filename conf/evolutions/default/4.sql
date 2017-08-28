@@ -5,7 +5,7 @@
 create table talk_feedbacks(
   id serial primary key,
   talk_id integer references talks(id),
-  positive boolean not null,
+  feedback varchar(32) not null,
   details text
 );
 

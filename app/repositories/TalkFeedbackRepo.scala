@@ -2,7 +2,7 @@ package repositories
 
 import javax.inject.{Inject, Singleton}
 
-import models.TalkFeedback
+import models.{Feedback, TalkFeedback}
 import play.api.db.slick.DatabaseConfigProvider
 
 import scala.concurrent.Future
@@ -10,17 +10,22 @@ import scala.concurrent.Future
 trait TalkFeedbackQ extends BaseQ with TalkQ {
   import profile.api._
 
+  implicit val mapper = MappedColumnType.base[Feedback, String](
+    _.toString,
+    Feedback(_)
+  )
+
   class TalkFeedbackTable(tag: Tag) extends Table[TalkFeedback](tag, "talk_feedbacks") {
     def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
 
     def talkId = column[Long]("talk_id")
     def talk = foreignKey("talk_fk", talkId, talkQ)(_.id)
 
-    def positive = column[Boolean]("positive")
+    def feedback = column[Feedback]("feedback")
 
     def details = column[Option[String]]("details")
 
-    def * = (talkId, positive, details, id.?).mapTo[TalkFeedback]
+    def * = (talkId, feedback, details, id.?).mapTo[TalkFeedback]
   }
 
   val talkFeedbackQ = TableQuery[TalkFeedbackTable]
