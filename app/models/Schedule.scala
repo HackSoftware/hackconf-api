@@ -1,10 +1,9 @@
 package models
 
+import org.joda.time.LocalDate
 import play.api.libs.json.{JsObject, Json, Writes}
 
-case class Schedule(
-  talks: List[(TalkSchedule, Talk, Speaker)]
-)
+case class Schedule(talks: List[(TalkSchedule, Talk, Speaker)])
 
 object Schedule {
   implicit val writes = Writes[Schedule](schedule =>
@@ -20,4 +19,10 @@ object Schedule {
   ))
 }
 
+case class ScheduleForDate(date: LocalDate, schedule: Schedule)
 
+object ScheduleForDate {
+  implicit val writes = Writes[ScheduleForDate] (sfd =>
+    JsObject(Map(sfd.date.toString("yyyy-MM-dd") -> Json.toJson(sfd.schedule)))
+  )
+}
