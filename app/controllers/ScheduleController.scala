@@ -2,6 +2,7 @@ package controllers
 
 import javax.inject.{Inject, Singleton}
 
+import actions.RegisterTokenAction
 import models.{Schedule, ScheduleForDate, ScheduleRequest}
 import play.api.libs.json.JsObject
 import play.api.libs.json.Json.toJson
