@@ -3,12 +3,14 @@ package repositories
 import javax.inject.{Inject, Singleton}
 
 import models.{Feedback, TalkFeedback}
+import org.joda.time.Instant
 import play.api.db.slick.DatabaseConfigProvider
 
 import scala.concurrent.Future
 
 trait TalkFeedbackQ extends BaseQ with TalkQ {
   import profile.api._
+  import com.github.tototoshi.slick.PostgresJodaSupport._
 
   implicit val mapper = MappedColumnType.base[Feedback, String](
     _.toString,
@@ -21,11 +23,15 @@ trait TalkFeedbackQ extends BaseQ with TalkQ {
     def talkId = column[Long]("talk_id")
     def talk = foreignKey("talk_fk", talkId, talkQ)(_.id)
 
+    def deviceId = column[String]("device_id")
+
     def feedback = column[Feedback]("feedback")
+
+    def createdAt = column[Option[Instant]]("created_at")
 
     def details = column[Option[String]]("details")
 
-    def * = (talkId, feedback, details, id.?).mapTo[TalkFeedback]
+    def * = (talkId, deviceId, feedback, createdAt, details, id.?).mapTo[TalkFeedback]
   }
 
   val talkFeedbackQ = TableQuery[TalkFeedbackTable]

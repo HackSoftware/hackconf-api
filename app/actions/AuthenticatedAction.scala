@@ -12,10 +12,12 @@ import scala.concurrent.{ExecutionContext, Future}
   * Filters out the requests done without passing the `Token` set in the application.conf
   */
 
-class RegisterTokenAction @Inject() (parser: BodyParsers.Default, config: Configuration)(implicit ec: ExecutionContext) extends ActionBuilderImpl(parser) {
+class AuthenticatedAction @Inject()(parser: BodyParsers.Default, config: Configuration)(implicit ec: ExecutionContext) extends ActionBuilderImpl(parser) {
+  val apiKey = config.get[String]("api.key")
+
   override def invokeBlock[A](request: Request[A], block: (Request[A]) => Future[Result]): Future[Result] = {
     request.headers.get("Token") match {
-      case Some(x) if x == config.get[String]("api.key") =>
+      case Some(passedKey) if passedKey == apiKey =>
         block(request)
       case _ =>
         Future(Result(ResponseHeader(Status.UNAUTHORIZED), HttpEntity.NoEntity))

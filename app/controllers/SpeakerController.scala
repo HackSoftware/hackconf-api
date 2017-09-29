@@ -2,7 +2,7 @@ package controllers
 
 import javax.inject.{Inject, Singleton}
 
-import actions.RegisterTokenAction
+import actions.AuthenticatedAction
 import models.Speaker
 import play.api.libs.json.Json.toJson
 import play.api.mvc.{AbstractController, ControllerComponents}
@@ -13,7 +13,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class SpeakerController @Inject() (
   cc: ControllerComponents,
-  registerTokenAction: RegisterTokenAction,
+  authAction: AuthenticatedAction,
   speakers: SpeakerRepo
 )(implicit ec: ExecutionContext) extends AbstractController(cc) {
 
@@ -21,7 +21,7 @@ class SpeakerController @Inject() (
     speakers.list.map(x => Ok(toJson(x)))
   }
 
-  def create = registerTokenAction.async(parse.json[Speaker]) { implicit req =>
+  def create = authAction.async(parse.json[Speaker]) { implicit req =>
     speakers.create(req.body).map(x => Ok(toJson(x)))
   }
 
@@ -29,11 +29,11 @@ class SpeakerController @Inject() (
     speakers.get(id).map(x => Ok(toJson(x)))
   }
 
-  def update(id: Long) = registerTokenAction.async(parse.json[Speaker]) { implicit req =>
+  def update(id: Long) = authAction.async(parse.json[Speaker]) { implicit req =>
     speakers.update(id, req.body).map(x => Ok(toJson(x)))
   }
 
-  def delete(id: Long) = registerTokenAction.async {
+  def delete(id: Long) = authAction.async {
     speakers.delete(id).map(x => Ok(toJson(x)))
   }
 }

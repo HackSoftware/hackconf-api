@@ -2,7 +2,6 @@ package controllers
 
 import javax.inject.{Inject, Singleton}
 
-import actions.RegisterTokenAction
 import models.{Schedule, ScheduleForDate, ScheduleRequest}
 import play.api.libs.json.JsObject
 import play.api.libs.json.Json.toJson
@@ -22,8 +21,14 @@ class ScheduleController @Inject() (
       req.body.dates.map { date =>
         schedule.get(date).map { x => ScheduleForDate(date, Schedule(x)) }
       }
-    ).map {
-      x => Ok(JsObject(Map("result" -> toJson(x))))
+    ).map { daySchedules =>
+      Ok(JsObject(Map("result" ->
+        JsObject(daySchedules.map { case ScheduleForDate(date, dateSch) =>
+          date.toString("yyyy-MM-dd") -> toJson(dateSch.copy(talks = dateSch.talks.sortBy {
+            case (sch, talk, sp) => sch.startTime.toDateTimeToday.getMillis
+          }))
+        })
+      )))
     }
   }
 }

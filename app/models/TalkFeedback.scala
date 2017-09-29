@@ -1,5 +1,6 @@
 package models
 
+import org.joda.time.Instant
 import play.api.libs.json._
 
 sealed trait Feedback {
@@ -33,12 +34,18 @@ case object Great extends Feedback
 
 case class TalkFeedback(
   talkId: Long,
+  deviceId: String,
   feedback: Feedback,
+  createdAt: Option[Instant],
   details: Option[String],
   id: Option[Long]
 ) extends DbModel
 
 object TalkFeedback {
   val tupled = (apply _).tupled
+  implicit val instantFmt = Format[Instant](
+    Reads[Instant] { js => js.validate[String].map(Instant.parse)},
+    Writes[Instant] { instant =>JsString(instant.toString) }
+  )
   implicit val fmt = Json.format[TalkFeedback]
 }

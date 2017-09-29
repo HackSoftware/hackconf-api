@@ -30,4 +30,10 @@ GET     /talks/:id                  controllers.TalkController.get(id: Long)
 PUT     /talks/:id                  controllers.TalkController.update(id: Long)
 DELETE  /talks/:id                  controllers.TalkController.delete(id: Long)
 
+GET     /streams                controllers.LivestreamController.list
+POST    /streams                controllers.LivestreamController.create
+GET     /streams/:id            controllers.LivestreamController.get(id: Long)
+PUT     /streams/:id            controllers.LivestreamController.update(id: Long)
+DELETE  /streams/:id            controllers.LivestreamController.delete(id: Long)
+
 POST     /schedule controllers.ScheduleController.get
